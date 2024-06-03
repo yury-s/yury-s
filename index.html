@@ -22,6 +22,7 @@
     <div class="event-box" id="touchBox">Touch</div>
     <div class="event-box" id="pointerBox">Pointer</div>
     <div class="event-box" id="mouseBox">Mouse</div>
+    <div class="event-box" id="clear">clear</div>
     <div id="output"></div>
 
     <script>
@@ -82,6 +83,13 @@
         });
         mouseBox.addEventListener('mouseup', (event) => {
             logEvent('Mouse Up');
+        });
+
+        // Mouse Events
+        const clear = document.getElementById('clear');
+        clear.addEventListener('pointerdown', (event) => {
+            const output = document.getElementById('output');
+            output.innerHTML = '';
         });
 
         // Function to log events
