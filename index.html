@@ -38,6 +38,28 @@
             logEvent('Touch End');
         });
 
+        touchBox.addEventListener('pointerdown', (event) => {
+            logEvent('Pointer Down');
+        });
+        touchBox.addEventListener('pointermove', (event) => {
+            logEvent('Pointer Move');
+        });
+        touchBox.addEventListener('pointerup', (event) => {
+            logEvent('Pointer Up');
+        });
+
+        touchBox.addEventListener('mousedown', (event) => {
+            logEvent('Mouse Down');
+        });
+        touchBox.addEventListener('mousemove', (event) => {
+            logEvent('Mouse Move');
+        });
+        touchBox.addEventListener('mouseup', (event) => {
+            logEvent('Mouse Up');
+        });
+
+
+
         // Pointer Events
         const pointerBox = document.getElementById('pointerBox');
         pointerBox.addEventListener('pointerdown', (event) => {
