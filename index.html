@@ -26,66 +26,56 @@
     <div id="output"></div>
 
     <script>
+        function logTouchEvents(box) {
+            box.addEventListener('touchstart', (event) => {
+                logEvent('Touch Start');
+                event.preventDefault(); // Prevent default scrolling
+            });
+            box.addEventListener('touchmove', (event) => {
+                logEvent('Touch Move');
+            });
+            box.addEventListener('touchend', (event) => {
+                logEvent('Touch End');
+            });
+        }
+        function logPointerEvents(box) {
+            box.addEventListener('pointerdown', (event) => {
+                logEvent('Pointer Down');
+            });
+            box.addEventListener('pointermove', (event) => {
+                logEvent('Pointer Move');
+            });
+            box.addEventListener('pointerup', (event) => {
+                logEvent('Pointer Up');
+            });
+        }
+        function logMouseEvents(box) {
+            box.addEventListener('mousedown', (event) => {
+                logEvent('Mouse Down');
+            });
+            box.addEventListener('mousemove', (event) => {
+                logEvent('Mouse Move');
+            });
+            box.addEventListener('mouseup', (event) => {
+                logEvent('Mouse Up');
+            });
+        }
         // Touch Events
         const touchBox = document.getElementById('touchBox');
-        touchBox.addEventListener('touchstart', (event) => {
-            logEvent('Touch Start');
-            event.preventDefault(); // Prevent default scrolling
-        });
-        touchBox.addEventListener('touchmove', (event) => {
-            logEvent('Touch Move');
-        });
-        touchBox.addEventListener('touchend', (event) => {
-            logEvent('Touch End');
-        });
-
-        touchBox.addEventListener('pointerdown', (event) => {
-            logEvent('Pointer Down');
-        });
-        touchBox.addEventListener('pointermove', (event) => {
-            logEvent('Pointer Move');
-        });
-        touchBox.addEventListener('pointerup', (event) => {
-            logEvent('Pointer Up');
-        });
-
-        touchBox.addEventListener('mousedown', (event) => {
-            logEvent('Mouse Down');
-        });
-        touchBox.addEventListener('mousemove', (event) => {
-            logEvent('Mouse Move');
-        });
-        touchBox.addEventListener('mouseup', (event) => {
-            logEvent('Mouse Up');
-        });
-
-
+        logTouchEvents(touchBox);
+        logPointerEvents(touchBox);
+        logMouseEvents(touchBox);
 
         // Pointer Events
         const pointerBox = document.getElementById('pointerBox');
-        pointerBox.addEventListener('pointerdown', (event) => {
-            logEvent('Pointer Down');
-        });
-        pointerBox.addEventListener('pointermove', (event) => {
-            logEvent('Pointer Move');
-        });
-        pointerBox.addEventListener('pointerup', (event) => {
-            logEvent('Pointer Up');
-        });
+        logPointerEvents(pointerBox);
+        logMouseEvents(pointerBox);
 
         // Mouse Events
         const mouseBox = document.getElementById('mouseBox');
-        mouseBox.addEventListener('mousedown', (event) => {
-            logEvent('Mouse Down');
-        });
-        mouseBox.addEventListener('mousemove', (event) => {
-            logEvent('Mouse Move');
-        });
-        mouseBox.addEventListener('mouseup', (event) => {
-            logEvent('Mouse Up');
-        });
+        logMouseEvents(mouseBox);
 
-        // Mouse Events
+        // Clear Events
         const clear = document.getElementById('clear');
         clear.addEventListener('pointerdown', (event) => {
             const output = document.getElementById('output');
