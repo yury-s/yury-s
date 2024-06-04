@@ -23,13 +23,18 @@
     <div class="event-box" id="pointerBox">Pointer</div>
     <div class="event-box" id="mouseBox">Mouse</div>
     <div class="event-box" id="clear">clear</div>
+    <input type="checkbox" id="preventDefault">preventDefault</input>
     <div id="output"></div>
 
     <script>
+        const preventDefaultBox = document.getElementById('preventDefault');
         function logTouchEvents(box) {
             box.addEventListener('touchstart', (event) => {
                 logEvent('Touch Start');
-                event.preventDefault(); // Prevent default scrolling
+                if (preventDefaultBox.checked) {
+                    logEvent('Prevent Default');
+                    event.preventDefault(); // Prevent default scrolling
+                }
             });
             box.addEventListener('touchmove', (event) => {
                 logEvent('Touch Move');
