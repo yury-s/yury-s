@@ -17,12 +17,12 @@
         }
     </style>
 </head>
-<body>
+<body onload="toggleScrollable()">
     <h1>Event Demonstration</h1>
     <button id="clear" onclick="clearEvents()">clear</button>
     <input type="checkbox" id="preventDefault">preventDefault</input>
     <input type="checkbox" id="hasScrollableContent" onchange="toggleScrollable()">With scrollable content</input>
-    <div class="event-box" id="touchBox" style="overflow: scroll;"><div style="height: 1000px;">Touch, scrollable</div></div>
+    <div class="event-box" id="touchBox" style="overflow: scroll;"></div>
     <div id="output"></div>
 
     <script>
