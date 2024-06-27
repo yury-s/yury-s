@@ -6,9 +6,9 @@
     <title>Event Demonstration</title>
     <style>
         .event-box {
-            width: 300px;
+            width: 100%;
             height: 300px;
-            margin: 20px;
+            margin: 5px;
             display: inline-block;
             text-align: center;
             line-height: 100px;
@@ -19,75 +19,60 @@
 </head>
 <body>
     <h1>Event Demonstration</h1>
-    <div class="event-box" id="touchBox">Touch</div>
-    <div class="event-box" id="pointerBox">Pointer</div>
-    <div class="event-box" id="mouseBox">Mouse</div>
-    <div class="event-box" id="clear">clear</div>
+    <button id="clear" onclick="clearEvents()">clear</button>
     <input type="checkbox" id="preventDefault">preventDefault</input>
+    <input type="checkbox" id="hasScrollableContent" onchange="toggleScrollable()">With scrollable content</input>
+    <div class="event-box" id="touchBox" style="overflow: scroll;"><div style="height: 1000px;">Touch, scrollable</div></div>
     <div id="output"></div>
 
     <script>
         const preventDefaultBox = document.getElementById('preventDefault');
-        function logTouchEvents(box) {
-            box.addEventListener('touchstart', (event) => {
-                logEvent('Touch Start');
-                if (preventDefaultBox.checked) {
-                    logEvent('Prevent Default');
-                    event.preventDefault(); // Prevent default scrolling
-                }
-            });
-            box.addEventListener('touchmove', (event) => {
-                logEvent('Touch Move');
-            });
-            box.addEventListener('touchend', (event) => {
-                logEvent('Touch End');
-            });
+        function trackEvents(target) {
+            for (const event of [
+                'mousedown',
+                'mouseenter',
+                'mouseleave',
+                'mousemove',
+                'mouseout',
+                'mouseover',
+                'mouseup',
+                'click',
+                'pointercancel',
+                'pointerdown',
+                'pointerenter',
+                'pointerleave',
+                'pointermove',
+                'pointerout',
+                'pointerover',
+                'pointerup',
+                'touchstart',
+                'touchend',
+                'touchmove',
+                'touchcancel',
+            ]) {
+                target.addEventListener(event, e => {
+                    if (preventDefaultBox.checked)
+                        e.preventDefault();
+                    logEvent(event);
+                }, { passive: false });
+            }
         }
-        function logPointerEvents(box) {
-            box.addEventListener('pointerdown', (event) => {
-                logEvent('Pointer Down');
-            });
-            box.addEventListener('pointermove', (event) => {
-                logEvent('Pointer Move');
-            });
-            box.addEventListener('pointerup', (event) => {
-                logEvent('Pointer Up');
-            });
-        }
-        function logMouseEvents(box) {
-            box.addEventListener('mousedown', (event) => {
-                logEvent('Mouse Down');
-            });
-            box.addEventListener('mousemove', (event) => {
-                logEvent('Mouse Move');
-            });
-            box.addEventListener('mouseup', (event) => {
-                logEvent('Mouse Up');
-            });
-        }
-        // Touch Events
-        const touchBox = document.getElementById('touchBox');
-        logTouchEvents(touchBox);
-        logPointerEvents(touchBox);
-        logMouseEvents(touchBox);
 
-        // Pointer Events
-        const pointerBox = document.getElementById('pointerBox');
-        logPointerEvents(pointerBox);
-        logMouseEvents(pointerBox);
+        trackEvents(document.getElementById('touchBox'));
 
-        // Mouse Events
-        const mouseBox = document.getElementById('mouseBox');
-        logMouseEvents(mouseBox);
-
-        // Clear Events
-        const clear = document.getElementById('clear');
-        clear.addEventListener('pointerdown', (event) => {
+        function clearEvents() {
             const output = document.getElementById('output');
             output.innerHTML = '';
-        });
+        }
 
-        // Function to log events
+        function toggleScrollable() {
+            if (window.hasScrollableContent.checked)
+                document.getElementById('touchBox').innerHTML = '<div style="height: 1000px;">Touch, scrollable content</div>';
+            else
+                document.getElementById('touchBox').innerHTML = 'Touch, no content';
+            clearEvents();
+        }
+
         function logEvent(message) {
             const output = document.getElementById('output');
             const newEvent = document.createElement('div');
