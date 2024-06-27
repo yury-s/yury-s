@@ -52,7 +52,18 @@
                 target.addEventListener(event, e => {
                     if (preventDefaultBox.checked)
                         e.preventDefault();
-                    logEvent(event);
+                    let suffix = '';
+                    if (event === 'touchstart' || event === 'touchend' || event === 'touchmove' 
+                    ) {
+                        for (const touch of e.touches) {
+                            suffix += ` (${Math.round(touch.clientX)}, ${Math.round(touch.clientY)})`;
+                        }
+                    }
+                    // if (event === 'mousemove' || event === 'pointermove') {
+                    //     suffix = ` (${Math.round(e.clientX)}, ${Math.round(e.clientY)})`;
+                    // }
+
+                    logEvent(event + suffix);
                 }, { passive: false });
             }
         }
