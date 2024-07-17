@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Demonstration</title>
     <style>
+        #output {
+            overflow: scroll;
+        }
+        .body, #touchBox {
+            touch-action: none;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto auto auto;
+        }
+        .grid-container > div {
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 2px 0;
+        }
         .event-box {
             width: 100%;
             height: 300px;
@@ -22,7 +37,13 @@
     <input type="checkbox" id="preventDefault">preventDefault</input>
     <input type="checkbox" id="hasScrollableContent" onchange="toggleScrollable()">With scrollable content</input>
     <div class="event-box" id="touchBox" style="overflow: scroll;"></div>
-    <div id="output"></div>
+    <div id="output" class="grid-container">
+        <div>name</div>
+        <div>touches</div>
+        <div>changedTouches</div>
+        <div>targetTouches</div>
+        <div>targets</div>
+    </div>
 
     <script>
         const preventDefaultBox = document.getElementById('preventDefault');
@@ -52,18 +73,7 @@
                 target.addEventListener(event, e => {
                     if (preventDefaultBox.checked)
                         e.preventDefault();
-                    let suffix = '';
-                    if (event === 'touchstart' || event === 'touchend' || event === 'touchmove' 
-                    ) {
-                        for (const touch of e.touches) {
-                            // suffix += ` (${Math.round(touch.clientX)}, ${Math.round(touch.clientY)})`;
-                        }
-                    }
-                    // if (event === 'mousemove' || event === 'pointermove') {
-                    //     suffix = ` (${Math.round(e.clientX)}, ${Math.round(e.clientY)})`;
-                    // }
-
-                    logEvent(event + suffix, e);
+                    logEvent(event, e);
                 }, { passive: false });
             }
         }
@@ -83,26 +93,20 @@
             clearEvents();
         }
 
-        function logEvent(message, ev) {
+        function logEvent(type, ev) {
             const output = document.getElementById('output');
-            const newEvent = document.createElement('div');
 
-            let id = ev.pointerId ?? '';
-            if (ev.touches) {
-                id = 'a=[' + Array.from(ev.touches).map(t => t.identifier).join(', ') + ']';
+            function addCell(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                output.appendChild(div);
             }
-            if (ev.targetTouches) {
-                id += ', t=[' + Array.from(ev.targetTouches).map(t => t.identifier).join(', ') + ']';
-            }
-            if (ev.changedTouches) {
-                id += ', c=[' + Array.from(ev.changedTouches).map(t => t.identifier).join(', ') + ']';
-            }
-            let targetId = ev.target.id;
-            if (ev.touches) {
-                targetId += ', [' + Array.from(ev.touches).map(t => t.target.id).join(', ') + ']';
-            }
-            newEvent.textContent = message + " : " + id + " ; tar=" + targetId;
-            output.appendChild(newEvent);
+
+            addCell(type);
+            addCell(Array.from(ev.touches).map(t => t.identifier).join(', '));
+            addCell(Array.from(ev.changedTouches).map(t => t.identifier).join(', '));
+            addCell(Array.from(ev.targetTouches).map(t => t.identifier).join(', '));
+            addCell(Array.from(ev.touches).map(t => t.target.id).join(', '));
         }
     </script>
 </body>
