@@ -16,7 +16,7 @@
         }
     </style>
 </head>
-<body onload="toggleScrollable()">
+<body id='body' onload="toggleScrollable()">
     <h1>Event Demonstration</h1>
     <button id="clear" onclick="clearEvents()">clear</button>
     <input type="checkbox" id="preventDefault">preventDefault</input>
@@ -63,7 +63,7 @@
                     //     suffix = ` (${Math.round(e.clientX)}, ${Math.round(e.clientY)})`;
                     // }
 
-                    logEvent(event + suffix);
+                    logEvent(event + suffix, e);
                 }, { passive: false });
             }
         }
@@ -83,10 +83,19 @@
             clearEvents();
         }
 
-        function logEvent(message) {
+        function logEvent(message, ev) {
             const output = document.getElementById('output');
             const newEvent = document.createElement('div');
-            newEvent.textContent = message;
+
+            let id = ev.pointerId ?? '';
+            if (ev.touches) {
+                id = Array.from(ev.touches).map(t => t.identifier).join(', ');
+            }
+            let targetId = ev.target.id;
+            if (ev.touches) {
+                id += ', t=' + Array.from(ev.touches).map(t => t.target.id).join(', ');
+            }
+            newEvent.textContent = message + " : " + id + " ; " + targetId;
             output.appendChild(newEvent);
         }
     </script>
