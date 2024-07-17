@@ -28,22 +28,22 @@
         const preventDefaultBox = document.getElementById('preventDefault');
         function trackEvents(target) {
             for (const event of [
-                'mousedown',
-                'mouseenter',
-                'mouseleave',
-                'mousemove',
-                'mouseout',
-                'mouseover',
-                'mouseup',
-                'click',
-                'pointercancel',
-                'pointerdown',
-                'pointerenter',
-                'pointerleave',
-                'pointermove',
-                'pointerout',
-                'pointerover',
-                'pointerup',
+                // 'mousedown',
+                // 'mouseenter',
+                // 'mouseleave',
+                // 'mousemove',
+                // 'mouseout',
+                // 'mouseover',
+                // 'mouseup',
+                // 'click',
+                // 'pointercancel',
+                // 'pointerdown',
+                // 'pointerenter',
+                // 'pointerleave',
+                // 'pointermove',
+                // 'pointerout',
+                // 'pointerover',
+                // 'pointerup',
                 'touchstart',
                 'touchend',
                 'touchmove',
@@ -56,7 +56,7 @@
                     if (event === 'touchstart' || event === 'touchend' || event === 'touchmove' 
                     ) {
                         for (const touch of e.touches) {
-                            suffix += ` (${Math.round(touch.clientX)}, ${Math.round(touch.clientY)})`;
+                            // suffix += ` (${Math.round(touch.clientX)}, ${Math.round(touch.clientY)})`;
                         }
                     }
                     // if (event === 'mousemove' || event === 'pointermove') {
@@ -89,11 +89,17 @@
 
             let id = ev.pointerId ?? '';
             if (ev.touches) {
-                id = Array.from(ev.touches).map(t => t.identifier).join(', ');
+                id = 'a=[' + Array.from(ev.touches).map(t => t.identifier).join(', ') + ']';
+            }
+            if (ev.targetTouches) {
+                id = ', t=[' + Array.from(ev.targetTouches).map(t => t.identifier).join(', ') + ']';
+            }
+            if (ev.changedTouches) {
+                id = ', c=[' + Array.from(ev.changedTouches).map(t => t.identifier).join(', ') + ']';
             }
             let targetId = ev.target.id;
             if (ev.touches) {
-                id += ', t=' + Array.from(ev.touches).map(t => t.target.id).join(', ');
+                id += ', tar=[' + Array.from(ev.touches).map(t => t.target.id).join(', ') + ']';
             }
             newEvent.textContent = message + " : " + id + " ; " + targetId;
             output.appendChild(newEvent);
