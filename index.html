@@ -6,7 +6,7 @@
     <title>Event Demonstration</title>
     <style>
         #output {
-            overflow: scroll;
+            overflow-y: scroll;
         }
         .body, #touchBox {
             touch-action: none;
@@ -37,12 +37,14 @@
     <input type="checkbox" id="preventDefault">preventDefault</input>
     <input type="checkbox" id="hasScrollableContent" onchange="toggleScrollable()">With scrollable content</input>
     <div class="event-box" id="touchBox" style="overflow: scroll;"></div>
-    <div id="output" class="grid-container">
-        <div>name</div>
-        <div>touches</div>
-        <div>changedTouches</div>
-        <div>targetTouches</div>
-        <div>targets</div>
+    <div id="output">
+        <div class="grid-container">
+            <div>name</div>
+            <div>touches</div>
+            <div>changedTouches</div>
+            <div>targetTouches</div>
+            <div>targets</div>
+        </div>
     </div>
 
     <script>
@@ -81,7 +83,7 @@
         trackEvents(document.getElementById('touchBox'));
 
         function clearEvents() {
-            const output = document.getElementById('output');
+            const output = document.querySelector('.grid-container');
             output.innerHTML = '';
         }
 
@@ -94,7 +96,7 @@
         }
 
         function logEvent(type, ev) {
-            const output = document.getElementById('output');
+            const output = document.querySelector('.grid-container');
 
             function addCell(text) {
                 const div = document.createElement('div');
