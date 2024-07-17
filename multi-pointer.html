@@ -46,12 +46,10 @@
         var o = document.getElementsByTagName("output")[0];
         var s =
           name +
-          ": pointerID = " +
+          ": " +
           ev.pointerId +
-          " ; pointerType = " +
-          ev.pointerType +
-          " ; isPrimary = " +
-          ev.isPrimary;
+          " ; " + e.target.id + " ; " +
+          ev.pointerType;
         o.innerHTML += s + " <br>";
       }
 
