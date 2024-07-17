@@ -92,16 +92,16 @@
                 id = 'a=[' + Array.from(ev.touches).map(t => t.identifier).join(', ') + ']';
             }
             if (ev.targetTouches) {
-                id = ', t=[' + Array.from(ev.targetTouches).map(t => t.identifier).join(', ') + ']';
+                id += ', t=[' + Array.from(ev.targetTouches).map(t => t.identifier).join(', ') + ']';
             }
             if (ev.changedTouches) {
-                id = ', c=[' + Array.from(ev.changedTouches).map(t => t.identifier).join(', ') + ']';
+                id += ', c=[' + Array.from(ev.changedTouches).map(t => t.identifier).join(', ') + ']';
             }
             let targetId = ev.target.id;
             if (ev.touches) {
-                id += ', tar=[' + Array.from(ev.touches).map(t => t.target.id).join(', ') + ']';
+                targetId += ', [' + Array.from(ev.touches).map(t => t.target.id).join(', ') + ']';
             }
-            newEvent.textContent = message + " : " + id + " ; " + targetId;
+            newEvent.textContent = message + " : " + id + " ; tar=" + targetId;
             output.appendChild(newEvent);
         }
     </script>
