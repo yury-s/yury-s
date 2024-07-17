@@ -18,7 +18,7 @@
         }
         .grid-container {
             display: grid;
-            grid-template-columns: auto auto auto auto auto;
+            grid-template-columns: auto auto auto auto auto auto;
         }
         .grid-container > div {
             border-left: blueviolet solid 0.5px;
@@ -36,7 +36,7 @@
         }
     </style>
 </head>
-<body id='body'>
+<body id='body' onload="clearEvents()">
     <h1>Event Demonstration</h1>
     <button id="clear" onclick="clearEvents()">clear</button>
     <input type="checkbox" id="preventDefault">preventDefault</input>
@@ -47,11 +47,6 @@
 
     <div id="output">
         <div class="grid-container">
-            <div>name</div>
-            <div>touches</div>
-            <div>changedTouches</div>
-            <div>targetTouches</div>
-            <div>targets</div>
         </div>
     </div>
 
@@ -93,7 +88,8 @@
 
         function clearEvents() {
             const output = document.querySelector('.grid-container');
-            output.innerHTML = `            <div>name</div>
+            output.innerHTML = `<div>name</div>
+            <div>target</div>
             <div>touches</div>
             <div>changedTouches</div>
             <div>targetTouches</div>
@@ -118,6 +114,7 @@
             }
 
             addCell(type);
+            addCell(ev.target.id);
             addCell(Array.from(ev.touches).map(t => t.identifier).join(', '));
             addCell(Array.from(ev.changedTouches).map(t => t.identifier).join(', '));
             addCell(Array.from(ev.targetTouches).map(t => t.identifier).join(', '));
