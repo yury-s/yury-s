@@ -51,6 +51,13 @@
     </div>
 
     <script>
+        const shortIds = new Map();
+        function shortId(id) {
+            if (!shortIds.has(id))
+                shortIds.set(id, shortIds.size);
+            return shortIds.get(id);
+        }
+
         const preventDefaultBox = document.getElementById('preventDefault');
         function trackEvents(target) {
             for (const event of [
@@ -115,9 +122,9 @@
 
             addCell(type);
             addCell(ev.target.id);
-            addCell(Array.from(ev.touches).map(t => t.identifier).join(', '));
-            addCell(Array.from(ev.changedTouches).map(t => t.identifier).join(', '));
-            addCell(Array.from(ev.targetTouches).map(t => t.identifier).join(', '));
+            addCell(Array.from(ev.touches).map(t => shortId(t.identifier)).join(', '));
+            addCell(Array.from(ev.changedTouches).map(t => shortId(t.identifier)).join(', '));
+            addCell(Array.from(ev.targetTouches).map(t => shortId(t.identifier)).join(', '));
             addCell(Array.from(ev.touches).map(t => t.target.id || t.target.tagName).join(', '));
         }
     </script>
