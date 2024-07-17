@@ -108,7 +108,7 @@
             addCell(Array.from(ev.touches).map(t => t.identifier).join(', '));
             addCell(Array.from(ev.changedTouches).map(t => t.identifier).join(', '));
             addCell(Array.from(ev.targetTouches).map(t => t.identifier).join(', '));
-            addCell(Array.from(ev.touches).map(t => t.target.id).join(', '));
+            addCell(Array.from(ev.touches).map(t => t.target.id || t.target.tagName).join(', '));
         }
     </script>
 </body>
