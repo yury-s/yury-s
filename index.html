@@ -8,7 +8,12 @@
         #output {
             overflow-y: scroll;
         }
-        .body, #touchBox {
+        .target {
+            margin: 0em;
+            padding: 2em;
+            border: 1px solid green;
+        }
+        body {
             touch-action: none;
         }
         .grid-container {
@@ -31,12 +36,15 @@
         }
     </style>
 </head>
-<body id='body' onload="toggleScrollable()">
+<body id='body'>
     <h1>Event Demonstration</h1>
     <button id="clear" onclick="clearEvents()">clear</button>
     <input type="checkbox" id="preventDefault">preventDefault</input>
     <input type="checkbox" id="hasScrollableContent" onchange="toggleScrollable()">With scrollable content</input>
-    <div class="event-box" id="touchBox" style="overflow: scroll;"></div>
+    <!-- <div class="event-box" id="touchBox" style="overflow: scroll;"></div> -->
+    <div class="target" id="t1">Tap, Hold or Swipe me 1</div>
+    <div class="target" id="t2">Tap, Hold or Swipe me 2</div>
+
     <div id="output">
         <div class="grid-container">
             <div>name</div>
@@ -80,7 +88,8 @@
             }
         }
 
-        trackEvents(document.getElementById('touchBox'));
+        trackEvents(document.getElementById('t1'));
+        trackEvents(document.getElementById('t2'));
 
         function clearEvents() {
             const output = document.querySelector('.grid-container');
@@ -93,9 +102,9 @@
 
         function toggleScrollable() {
             if (window.hasScrollableContent.checked)
-                document.getElementById('touchBox').innerHTML = '<div style="height: 1000px;">Touch, scrollable content</div>';
+                document.getElementById('t1').innerHTML = '<div style="height: 1000px;">Touch, scrollable content</div>';
             else
-                document.getElementById('touchBox').innerHTML = 'Touch, no content';
+                document.getElementById('t1').innerHTML = 'Touch, no content';
             clearEvents();
         }
 
