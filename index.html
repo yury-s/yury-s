@@ -84,7 +84,11 @@
 
         function clearEvents() {
             const output = document.querySelector('.grid-container');
-            output.innerHTML = '';
+            output.innerHTML = `            <div>name</div>
+            <div>touches</div>
+            <div>changedTouches</div>
+            <div>targetTouches</div>
+            <div>targets</div>`;
         }
 
         function toggleScrollable() {
