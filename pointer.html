@@ -9,9 +9,15 @@
             overflow-y: scroll;
         }
         .target {
-            margin: 0em;
+            margin: 1px;
             padding: 2em;
             border: 1px solid green;
+
+            overflow: scroll;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            user-select: none;
         }
         body {
             touch-action: none;
@@ -41,7 +47,6 @@
     <button id="clear" onclick="clearEvents()">clear</button>
     <input type="checkbox" id="preventDefault">preventDefault</input>
     <input type="checkbox" id="hasScrollableContent" onchange="toggleScrollable()">With scrollable content</input>
-    <!-- <div class="event-box" id="touchBox" style="overflow: scroll;"></div> -->
     <div class="target" id="t1">Tap, Hold or Swipe me 1</div>
     <div class="target" id="t2">Tap, Hold or Swipe me 2</div>
 
@@ -104,7 +109,7 @@
 
         function toggleScrollable() {
             if (window.hasScrollableContent.checked)
-                document.getElementById('t1').innerHTML = '<div style="height: 1000px;">Touch, scrollable content</div>';
+                document.getElementById('t1').innerHTML = '<div style="height: 1000px;">Touch, scrollable content</div><div>The End.</div>';
             else
                 document.getElementById('t1').innerHTML = 'Touch, no content';
             clearEvents();
