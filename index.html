@@ -110,7 +110,7 @@
 
         function toggleScrollable() {
             if (window.hasScrollableContent.checked)
-                document.getElementById('t1').innerHTML = '<div style="height: 1000px;">Touch, scrollable content</div><div>The End.</div>';
+                document.getElementById('t1').innerHTML = '<div id="c1" style="height: 1000px;">Touch, scrollable content</div><div id="c2">The End.</div>';
             else
                 document.getElementById('t1').innerHTML = 'Touch, no content';
             clearEvents();
