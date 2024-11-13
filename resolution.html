@@ -13,10 +13,12 @@
 function onLoad() {
   window.innerSize.innerHTML = window.innerWidth + ' x ' + window.innerHeight;
   window.screenSize.innerHTML = window.screen.width + ' x ' + window.screen.height;
+  window.screenSize.dpr = window.devicePixelRatio;
 }
 </script>
 <body onload="onLoad()">
   <div><span class="label">Inner size:</span><span id='innerSize'></span></div>
   <div><span class="label">Screen size:</span><span id='screenSize'></span></div>
+  <div><span class="label">devicePixelRatio:</span><span id='dpr'></span></div>
 </body>
 </html>
