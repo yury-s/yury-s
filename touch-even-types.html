@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Demonstration</title>
+    <style>
+        #output {
+            overflow-y: scroll;
+        }
+        .target {
+            margin: 1px;
+            padding: 2em;
+            border: 1px solid green;
+
+            overflow: scroll;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            user-select: none;
+        }
+        body {
+            touch-action: none;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto;
+        }
+        .grid-container > div {
+            border-left: blueviolet solid 0.5px;
+            text-align: center;
+            padding: 4px 0;
+        }
+        .event-box {
+            width: 100%;
+            height: 300px;
+            display: inline-block;
+            text-align: center;
+            line-height: 100px;
+            border: 2px solid black;
+            user-select: none;
+        }
+    </style>
+</head>
+<body id='body' onload="clearEvents()">
+    <h1>Event Demonstration</h1>
+    <button id="clear" onclick="clearEvents()">clear</button>
+    <input type="checkbox" id="preventDefault">preventDefault</input>
+    <input type="checkbox" id="hasScrollableContent" onchange="toggleScrollable()">With scrollable content</input>
+    <div class="target" id="t1">Tap, Hold or Swipe me 1</div>
+    <div class="target" id="t2">Tap, Hold or Swipe me 2</div>
+
+    <div id="output">
+        <div class="grid-container">
+        </div>
+    </div>
+
+    <script>
+        const shortIds = new Map();
+        function shortId(id) {
+            if (!shortIds.has(id))
+                shortIds.set(id, shortIds.size);
+            return shortIds.get(id);
+        }
+
+        const preventDefaultBox = document.getElementById('preventDefault');
+        function trackEvents(target) {
+            for (const event of [
+                // 'mousedown',
+                // 'mouseenter',
+                // 'mouseleave',
+                // 'mousemove',
+                // 'mouseout',
+                // 'mouseover',
+                // 'mouseup',
+                // 'click',
+                // 'pointercancel',
+                // 'pointerdown',
+                // 'pointerenter',
+                // 'pointerleave',
+                // 'pointermove',
+                // 'pointerout',
+                // 'pointerover',
+                // 'pointerup',
+                'touchstart',
+                'touchend',
+                'touchmove',
+                'touchcancel',
+            ]) {
+                target.addEventListener(event, e => {
+                    if (preventDefaultBox.checked)
+                        e.preventDefault();
+                    logEvent(event, e);
+                }, { passive: false });
+            }
+        }
+
+        trackEvents(document.getElementById('t1'));
+        trackEvents(document.getElementById('t2'));
+
+        function clearEvents() {
+            const output = document.querySelector('.grid-container');
+            output.innerHTML = `<div>name</div>
+            <div>target</div>
+            <div>touches</div>
+            <div>changedTouches</div>
+            <div>targetTouches</div>
+            <div>targets</div>`;
+        }
+
+        function toggleScrollable() {
+            if (window.hasScrollableContent.checked)
+                document.getElementById('t1').innerHTML = '<div id="c1" style="height: 1000px;">Touch, scrollable content</div><div id="c2">The End.</div>';
+            else
+                document.getElementById('t1').innerHTML = 'Touch, no content';
+            clearEvents();
+        }
+
+        function logEvent(type, ev) {
+            const output = document.querySelector('.grid-container');
+
+            function addCell(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                output.appendChild(div);
+            }
+
+            addCell(type + ' ' + ev.constructor.name);
+            addCell(ev.target.id);
+            addCell(Array.from(ev.touches).map(t => t.constructor.name + ' ' + shortId(t.identifier)).join(', '));
+            addCell(Array.from(ev.changedTouches).map(t => t.constructor.name + ' ' + shortId(t.identifier)).join(', '));
+            addCell(Array.from(ev.targetTouches).map(t => t.constructor.name + ' ' + shortId(t.identifier)).join(', '));
+            addCell(Array.from(ev.touches).map(t => t.target.id || t.target.tagName).join(', '));
+        }
+    </script>
+</body>
+</html>
